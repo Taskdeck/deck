@@ -60,18 +60,18 @@ a:hover { text-decoration: underline; }
         border: none; 
         padding: 8px 0;
         position: relative;
-        padding-left: 45%;
-        text-align: right;
+        padding-right: 45%;
+        text-align: left;
     }
     
     td:before { 
         content: attr(data-label);
         position: absolute;
-        left: 0;
+        right: 0;
         width: 40%;
-        padding-right: 10px;
+        padding-left: 10px;
         font-weight: bold;
-        text-align: left;
+        text-align: right;
         color: #666;
         font-size: 13px;
     }
@@ -86,7 +86,7 @@ a:hover { text-decoration: underline; }
 
 @media (max-width: 480px) {
     h1 { font-size: 20px; }
-    td { font-size: 14px; padding-left: 40%; }
+    td { font-size: 14px; padding-right: 40%; }
     td:before { font-size: 12px; width: 35%; }
 }
 </style>
