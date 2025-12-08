@@ -7,62 +7,88 @@
 <style>
 body { font-family: Arial, sans-serif; background: #f6f7fb; margin: 0; padding: 20px; }
 h1 { font-size: 28px; margin-bottom: 20px; }
+
+/* Desktop table styles */
+.table-container { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-th { background: #e6e9f2; text-align: left; padding: 14px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+th { background: #e6e9f2; text-align: left; padding: 14px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
 td { padding: 14px; border-bottom: 1px solid #f0f0f0; font-size: 15px; }
 tr:hover { background: #f8faff; }
+
 .tag { display: inline-block; padding: 4px 10px; background: #d8eaff; color: #0056b3; border-radius: 20px; font-size: 12px; margin-right: 6px; cursor: pointer; }
 .status { padding: 6px 12px; border-radius: 10px; font-weight: bold; font-size: 13px; display: inline-block; }
 .stage-planning { background: #fff3cd; color: #8a6d3b; }
 .stage-active { background: #d4edda; color: #155724; }
 .stage-hold { background: #f8d7da; color: #721c24; }
-.priority-high { background: #f8d7da; color: #721c24; }
-.priority-medium { background: #fff3cd; color: #8a6d3b; }
-.priority-low { background: #d4edda; color: #155724; }
 a { color: #007bff; text-decoration: none; font-weight: bold; }
 a:hover { text-decoration: underline; }
+
 .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
-.modal-content { background: white; margin: 10% auto; padding: 20px; border-radius: 12px; width: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.modal-content { background: white; margin: 10% auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 600px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 .close { color: #aaa; float: right; font-size: 24px; font-weight: bold; cursor: pointer; }
 .close:hover { color: black; }
 
-.priority-dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.priority-btn {
-    border: none;
-    padding: 6px 12px;
-    font-size: 13px;
-    cursor: pointer;
-    border-radius: 8px;
-    font-weight: bold;
-}
-
+.priority-dropdown { position: relative; display: inline-block; }
+.priority-btn { border: none; padding: 6px 12px; font-size: 13px; cursor: pointer; border-radius: 8px; font-weight: bold; }
 .priority-low { background: #d4edda; color: #155724; }
 .priority-medium { background: #fff3cd; color: #8a6d3b; }
 .priority-high { background: #f8d7da; color: #721c24; }
+.priority-menu { display: none; position: absolute; background: white; min-width: 120px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 20; }
+.priority-menu .priority-option { padding: 10px; cursor: pointer; }
+.priority-menu .priority-option:hover { background: #f1f1f1; }
 
-.priority-menu {
-    display: none;
-    position: absolute;
-    background: white;
-    min-width: 120px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    z-index: 20;
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    body { padding: 10px; }
+    h1 { font-size: 22px; }
+    
+    /* Hide table, show cards */
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute; top: -9999px; left: -9999px; }
+    
+    tr { 
+        background: white; 
+        border-radius: 12px; 
+        margin-bottom: 15px; 
+        padding: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    tr:hover { background: white; }
+    
+    td { 
+        border: none; 
+        padding: 8px 0;
+        position: relative;
+        padding-left: 45%;
+        text-align: right;
+    }
+    
+    td:before { 
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 40%;
+        padding-right: 10px;
+        font-weight: bold;
+        text-align: left;
+        color: #666;
+        font-size: 13px;
+    }
+    
+    .modal-content { 
+        margin: 5% auto;
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
 }
 
-.priority-menu .priority-option {
-    padding: 10px;
-    cursor: pointer;
+@media (max-width: 480px) {
+    h1 { font-size: 20px; }
+    td { font-size: 14px; padding-left: 40%; }
+    td:before { font-size: 12px; width: 35%; }
 }
-
-.priority-menu .priority-option:hover {
-    background: #f1f1f1;
-}
-
 </style>
 </head>
 <body>
