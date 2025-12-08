@@ -1,0 +1,12 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Domains</h2>
+<ul>
+{% for d in domains %}
+<li><a href="/domain/{{ d.domain }}">{{ d.domain }}</a></li>
+{% endfor %}
+</ul>
+</body>
+</html>

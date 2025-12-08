@@ -1,0 +1,13 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+<h2>{{ domain.domain }}</h2>
+<h3>Opened Accounts:</h3>
+<ul>
+{% for acc in domain.company_accounts %}
+<li>{{ acc }}</li>
+{% endfor %}
+</ul>
+</body>
+</html>
