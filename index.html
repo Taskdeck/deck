@@ -1,866 +1,1795 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Domains – TaskDeck</title>
-<style>
-body { font-family: Arial, sans-serif; background: #f6f7fb; margin: 0; padding: 20px; }
-h1 { font-size: 28px; margin-bottom: 20px; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Domains – TaskDeck</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f6f7fb;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
 
-/* Desktop table styles */
-.table-container { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-th { background: #e6e9f2; text-align: left; padding: 14px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
-td { padding: 14px; border-bottom: 1px solid #f0f0f0; font-size: 15px; }
-tr:hover { background: #f8faff; }
-
-.tag { display: inline-block; padding: 4px 10px; background: #d8eaff; color: #0056b3; border-radius: 20px; font-size: 12px; margin-right: 6px; cursor: pointer; }
-.status { padding: 6px 12px; border-radius: 10px; font-weight: bold; font-size: 13px; display: inline-block; }
-.stage-planning { background: #fff3cd; color: #8a6d3b; }
-.stage-active { background: #d4edda; color: #155724; }
-.stage-hold { background: #f8d7da; color: #721c24; }
-a { color: #007bff; text-decoration: none; font-weight: bold; }
-a:hover { text-decoration: underline; }
-
-.modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
-.modal-content { background: white; margin: 10% auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 600px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-.close { color: #aaa; float: right; font-size: 24px; font-weight: bold; cursor: pointer; }
-.close:hover { color: black; }
-
-.priority-dropdown { position: relative; display: inline-block; }
-.priority-btn { border: none; padding: 6px 12px; font-size: 13px; cursor: pointer; border-radius: 8px; font-weight: bold; }
-.priority-low { background: #d4edda; color: #155724; }
-.priority-medium { background: #fff3cd; color: #8a6d3b; }
-.priority-high { background: #f8d7da; color: #721c24; }
-.priority-menu { display: none; position: absolute; background: white; min-width: 120px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 20; }
-.priority-menu .priority-option { padding: 10px; cursor: pointer; }
-.priority-menu .priority-option:hover { background: #f1f1f1; }
-
-/* Mobile responsive styles */
-@media (max-width: 768px) {
-    body { padding: 10px; }
-    h1 { font-size: 22px; }
-    
-    /* Hide table, show cards */
-    table, thead, tbody, th, td, tr { display: block; }
-    thead tr { position: absolute; top: -9999px; left: -9999px; }
-    
-    tr { 
-        background: white; 
-        border-radius: 12px; 
-        margin-bottom: 15px; 
-        padding: 15px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    
-    tr:hover { background: white; }
-    
-    td { 
-        border: none; 
-        padding: 8px 0;
-        position: relative;
-        padding-right: 45%;
+      /* Desktop table styles */
+      .table-container {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+      th {
+        background: #e6e9f2;
         text-align: left;
-    }
-    
-    td:before { 
-        content: attr(data-label);
-        position: absolute;
-        right: 0;
-        width: 40%;
-        padding-left: 10px;
+        padding: 14px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+      }
+      td {
+        padding: 14px;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 15px;
+      }
+      tr:hover {
+        background: #f8faff;
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 4px 10px;
+        background: #d8eaff;
+        color: #0056b3;
+        border-radius: 20px;
+        font-size: 12px;
+        margin-right: 6px;
+        cursor: pointer;
+      }
+      .status {
+        padding: 6px 12px;
+        border-radius: 10px;
         font-weight: bold;
-        text-align: right;
-        color: #666;
         font-size: 13px;
-    }
+        display: inline-block;
+      }
+      .stage-planning {
+        background: #fff3cd;
+        color: #8a6d3b;
+      }
+      .stage-active {
+        background: #d4edda;
+        color: #155724;
+      }
+      .stage-hold {
+        background: #f8d7da;
+        color: #721c24;
+      }
+      a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background: white;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .close:hover {
+        color: black;
+      }
+
+      .priority-dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      .priority-btn {
+        border: none;
+        padding: 6px 12px;
+        font-size: 13px;
+        cursor: pointer;
+        border-radius: 8px;
+        font-weight: bold;
+      }
+      .priority-low {
+        background: #d4edda;
+        color: #155724;
+      }
+      .priority-medium {
+        background: #fff3cd;
+        color: #8a6d3b;
+      }
+      .priority-high {
+        background: #f8d7da;
+        color: #721c24;
+      }
+      .priority-menu {
+        display: none;
+        position: absolute;
+        background: white;
+        min-width: 120px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 20;
+      }
+      .priority-menu .priority-option {
+        padding: 10px;
+        cursor: pointer;
+      }
+      .priority-menu .priority-option:hover {
+        background: #f1f1f1;
+      }
+
+      /* Mobile responsive styles */
+      @media (max-width: 768px) {
+        body {
+          padding: 10px;
+        }
+        h1 {
+          font-size: 22px;
+        }
+
+        /* Hide table, show cards */
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+        thead tr {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+
+        tr {
+          background: white;
+          border-radius: 12px;
+          margin-bottom: 15px;
+          padding: 15px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        tr:hover {
+          background: white;
+        }
+
+        td {
+          border: none;
+          padding: 8px 0;
+          position: relative;
+          padding-right: 45%;
+          text-align: left;
+        }
+
+        td:before {
+          content: attr(data-label);
+          position: absolute;
+          right: 0;
+          width: 40%;
+          padding-left: 10px;
+          font-weight: bold;
+          text-align: right;
+          color: #666;
+          font-size: 13px;
+        }
+
+        .modal-content {
+          margin: 5% auto;
+          width: 95%;
+          max-height: 90vh;
+          overflow-y: auto;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 20px;
+        }
+        td {
+          font-size: 14px;
+          padding-right: 40%;
+        }
+        td:before {
+          font-size: 12px;
+          width: 35%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div style="display:flex; justify-content: space-between; align-items: center;">
+     <img src="/assets/img/logo.png" alt="TaskDeck Logo" style="height:80px;" />
+      <h1>Domains Task Management</h1>
+    <h4 style="display:flexbox;"><input type="date" id="invoiceDate" value="2024-12-08" /></h4>
+
+    </div>
     
-    .modal-content { 
-        margin: 5% auto;
-        width: 95%;
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-}
+    <table>
+      <tr>
+        <th>Domain</th>
+        <th>Renewal Date</th>
+        <th>Tags</th>
+        <th>Project Stage</th>
+        <th>Priority</th>        
+        <th>Mobile</th>
+        <th>Phone</th>
+        <th>Address</th>
+      </tr>
 
-@media (max-width: 480px) {
-    h1 { font-size: 20px; }
-    td { font-size: 14px; padding-right: 40%; }
-    td:before { font-size: 12px; width: 35%; }
-}
-</style>
-</head>
-<body>
+      <!-- Example Row -->
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="yottalaboratories.co.uk"
+            >yottalaboratories.co.uk</a
+          >
+        </td>
+        <td>2024-12-20</td>
+        <td>
+          <span class="tag" data-domain="yottalaboratories.co.uk">Tech</span>
+          <span class="tag">B2B</span>
+        </td>
+        <td><span class="status stage-active">Active</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 161 531 0230</td>
+        <td>+44 161 531 0230</td>
+        <td>Chapel Street, Congleton</td>
+      </tr>
 
-<h1>Domain Management – TaskDeck</h1>
-
-<table>
-    <tr>
-<th>Domain</th>
-<th>Renewal Date</th>
-<th>Tags</th>
-<th>Project Stage</th>
-<th>Priority</th>
-<th>Phone</th>
-<th>Mobile</th>
-<th>Address</th>
-</tr>
-
-    <!-- Example Row -->
-    <tr>
-<td><a class="open-modal" href="javascript:void(0);" data-domain="yottalaboratories.co.uk">yottalaboratories.co.uk</a></td>
-<td>2025-03-10</td>
-<td><span class="tag" data-domain="yottalaboratories.co.uk">Tech</span> <span class="tag">B2B</span></td>
-<td><span class="status stage-active">Active</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 161 531 0230</td>
-<td>+44 161 531 0230</td>
-<td>Chapel Street, Congleton</td>
-</tr>
-
-    <tr>
-<td><a class="open-modal" href="javascript:void(0);" data-domain="captiveanimals.co.uk">captiveanimals.co.uk</a></td>
-<td>2024-12-20</td>
-<td><span class="tag" data-domain="captiveanimals.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>Piccadilly Business Centre , Manchester</td>
-</tr>
-    <tr>
-        <td><a class="open-modal" href="javascript:void(0);" data-domain="aura-wind.co.uk">aura-wind.co.uk</a></td>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="captiveanimals.co.uk"
+            >captiveanimals.co.uk</a
+          >
+        </td>
+        <td>2024-12-20</td>
+        <td>
+          <span class="tag" data-domain="captiveanimals.co.uk">Nonprofit</span>
+        </td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 1213</td>
+        <td>Piccadilly Business Centre , Manchester</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="aura-wind.co.uk"
+            >aura-wind.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
-        <td><span class="tag" data-domain="aura-wind.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>The Shard, London</td>
-    </tr>
-     <tr>
-        <td><a class="open-modal" href="javascript:void(0);" data-domain="whitestonebridge.uk">whitestonebridge.uk</a></td>
+        <td>
+          <span class="tag" data-domain="aura-wind.co.uk">Nonprofit</span>
+        </td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>The Shard, London</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="whitestonebridge.uk"
+            >whitestonebridge.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
-       <td><span class="tag" data-domain="whitestonebridge.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>Piccadilly Business Centre, Manchester</td>
-    </tr>
-     <tr>
-        <td><a class="open-modal" href="javascript:void(0);" data-domain="fatsoma.uk">fatsoma.uk</a></td>
+        <td>
+          <span class="tag" data-domain="whitestonebridge.uk">Nonprofit</span>
+        </td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 884 1923</td>
+        <td>Piccadilly Business Centre, Manchester</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="fatsoma.uk"
+            >fatsoma.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
         <td><span class="tag" data-domain="fatsoma.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>Jactin House, Manchester</td>
-    </tr>
-     <tr>
-        <td><a class="open-modal" href="javascript:void(0);" data-domain="gearbulk.co.uk">gearbulk.co.uk</a></td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>Jactin House, Manchester</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="gearbulk.co.uk"
+            >gearbulk.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
         <td><span class="tag" data-domain="gearbulk.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>The Shard, London</td>
-    </tr>
-     <tr>
-        <td><a class="open-modal" href="javascript:void(0);" data-domain="arrkltd.co.uk">arrkltd.co.uk</a></td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>The Shard, London</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="arrkltd.co.uk"
+            >arrkltd.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
         <td><span class="tag" data-domain="arrkltd.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>Jactin House, Manchester</td>
-    </tr>
-     <tr>
-        <td><a class="open-modal" href="javascript:void(0);" data-domain="ndsco.co.uk">ndsco.co.uk</a></td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 399 6783</td>
+        <td>Jactin House, Manchester</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="ndsco.co.uk"
+            >ndsco.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
         <td><span class="tag" data-domain="ndsco.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td> LOWRY MILL, Manchester</td>
-    </tr>
-     <tr>
-        <td><a class="open-modal" href="javascript:void(0);" data-domain="fintego.co.uk">fintego.co.uk</a></td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 2919</td>
+        <td>LOWRY MILL, Manchester</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="fintego.co.uk"
+            >fintego.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
         <td><span class="tag" data-domain="fintego.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>INITIAL BUSINESS CENTRE, Manchester</td>
-    </tr>
-     <tr>
-        <td><a class="open-modal" href="javascript:void(0);" data-domain="filterstechnik.co.uk">filterstechnik.co.uk</a></td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 8560</td>
+        <td>INITIAL BUSINESS CENTRE, Manchester</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="filterstechnik.co.uk"
+            >filterstechnik.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
-        <td><span class="tag" data-domain="filterstechnik.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>456 Wildlife Rd, Manchester</td>
-    </tr>
-     <tr>
-      <td><a class="open-modal" href="javascript:void(0);" data-domain="wbtec.co.uk">wbtec.co.uk</a></td>
+        <td>
+          <span class="tag" data-domain="filterstechnik.co.uk">Nonprofit</span>
+        </td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 115 677 2474</td>
+        <td>456 Wildlife Rd, Manchester</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="wbtec.co.uk"
+            >wbtec.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
         <td><span class="tag" data-domain="wbtec.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>PICCADILLY BUSINESS CENTRE, Manchester</td>
-    </tr>
-     <tr>
-       <td><a class="open-modal" href="javascript:void(0);" data-domain="fcrlimited.com">fcrlimited.com</a></td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>PICCADILLY BUSINESS CENTRE, Manchester</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="fcrlimited.com"
+            >fcrlimited.com</a
+          >
+        </td>
         <td>2025-09-01</td>
-       <td><span class="tag" data-domain="fcrlimited.com">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>INITIAL BUSINESS CENTRE, Manchester</td>
-    </tr>
-     <tr>
-      <td><a class="open-modal" href="javascript:void(0);" data-domain="qflimited.co.uk">qflimited.co.uk</a></td>
+        <td><span class="tag" data-domain="fcrlimited.com">Nonprofit</span></td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>INITIAL BUSINESS CENTRE, Manchester</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="qflimited.co.uk"
+            >qflimited.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
-        <td><span class="tag" data-domain="qflimited.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>BOLD BUSINESS CENTRE, Helens</td>
-    </tr>
-     <tr>
-     <td><a class="open-modal" href="javascript:void(0);" data-domain="jacelectrical.uk">jacelectrical.uk</a></td>
+        <td>
+          <span class="tag" data-domain="qflimited.co.uk">Nonprofit</span>
+        </td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>BOLD BUSINESS CENTRE, Helens</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="jacelectrical.uk"
+            >jacelectrical.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
-        <td><span class="tag" data-domain="jacelectrical.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>Bold Business Centre, St. Helens</td>
-    </tr>
-     <tr>
-      <td><a class="open-modal" href="javascript:void(0);" data-domain="fwdiscovery.co.uk">fwdiscovery.co.uk</a></td>
+        <td>
+          <span class="tag" data-domain="jacelectrical.uk">Nonprofit</span>
+        </td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>Bold Business Centre, St. Helens</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="fwdiscovery.co.uk"
+            >fwdiscovery.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
-        <td><span class="tag" data-domain="fwdiscovery.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>The Shard, London</td>
-    </tr>
-     <tr>
-      <td><a class="open-modal" href="javascript:void(0);" data-domain="movauk.co.uk">movauk.co.uk</a></td>
+        <td>
+          <span class="tag" data-domain="fwdiscovery.co.uk">Nonprofit</span>
+        </td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>The Shard, London</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="movauk.co.uk"
+            >movauk.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
         <td><span class="tag" data-domain="movauk.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>The Shard, London</td>
-    </tr>
-     <tr>
-      <td><a class="open-modal" href="javascript:void(0);" data-domain="blueberrypartners.co.uk">blueberrypartners.co.uk</a></td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>The Shard, London</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="blueberrypartners.co.uk"
+            >blueberrypartners.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
-       <td><span class="tag" data-domain="blueberrypartners.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>GROSVENOR HOUSE, Congleton</td>
-    </tr>
-     <tr>
-       <td><a class="open-modal" href="javascript:void(0);" data-domain="aarichmond.co.uk">aarichmond.co.uk</a></td>
+        <td>
+          <span class="tag" data-domain="blueberrypartners.co.uk"
+            >Nonprofit</span
+          >
+        </td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>GROSVENOR HOUSE, Congleton</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="aarichmond.co.uk"
+            >aarichmond.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
-        <td><span class="tag" data-domain="aarichmond.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>Chapel Street, Congleton</td>
-    </tr>
-     <tr>
-      <td><a class="open-modal" href="javascript:void(0);" data-domain="yottalaboratories.co.uk">yottalaboratories.co.uk</a></td>
+        <td>
+          <span class="tag" data-domain="aarichmond.co.uk">Nonprofit</span>
+        </td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>Chapel Street, Congleton</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="yottalaboratories.co.uk"
+            >yottalaboratories.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
-       <td><span class="tag" data-domain="aura-wind.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
-    </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>Chapel Street, Congleton</td>
-    </tr>
-     <tr>
-      <td><a class="open-modal" href="javascript:void(0);" data-domain="yottalaboratories.co.uk">yottalaboratories.co.uk</a></td>
+        <td>
+          <span class="tag" data-domain="aura-wind.co.uk">Nonprofit</span>
+        </td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>Chapel Street, Congleton</td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            class="open-modal"
+            href="javascript:void(0);"
+            data-domain="yottalaboratories.co.uk"
+            >yottalaboratories.co.uk</a
+          >
+        </td>
         <td>2025-09-01</td>
-        <td><span class="tag" data-domain="captiveanimals.co.uk">Nonprofit</span></td>
-<td><span class="status stage-planning">Planning</span></td>
-<td>
-    <div class="priority-dropdown">
-        <button class="priority-btn priority-medium">Medium ▾</button>
-        <div class="priority-menu">
-            <div data-value="low" class="priority-option">Low</div>
-            <div data-value="medium" class="priority-option">Medium</div>
-            <div data-value="high" class="priority-option">High</div>
-        </div>
+        <td>
+          <span class="tag" data-domain="captiveanimals.co.uk">Nonprofit</span>
+        </td>
+        <td><span class="status stage-planning">Planning</span></td>
+        <td>
+          <div class="priority-dropdown">
+            <button class="priority-btn priority-medium">Medium ▾</button>
+            <div class="priority-menu">
+              <div data-value="low" class="priority-option">Low</div>
+              <div data-value="medium" class="priority-option">Medium</div>
+              <div data-value="high" class="priority-option">High</div>
+            </div>
+          </div>
+        </td>
+        <td>+44 73 5288 2633</td>
+        <td>+44 161 531 0230</td>
+        <td>Chapel Street, Congleton</td>
+      </tr>
+    </table>
+    <div id="accountModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modal-domain"></h2>
+        <table border="1" style="width: 100%; border-collapse: collapse">
+          <tr>
+            <th>Account</th>
+            <th>Username</th>
+            <th>Status</th>
+          </tr>
+          <tbody id="modal-accounts"></tbody>
+        </table>
+      </div>
     </div>
-</td>
-<td>+44 73 5288 2633</td>
-<td>+44 161 531 0230</td>
-<td>Chapel Street, Congleton</td>
-    </tr>
 
-</table>
-<div id="accountModal" class="modal">
-<div class="modal-content">
-<span class="close">&times;</span>
-<h2 id="modal-domain"></h2>
-<table border="1" style="width:100%; border-collapse: collapse;">
-<tr><th>Account</th><th>Username</th><th>Status</th></tr>
-<tbody id="modal-accounts"></tbody>
-</table>
-</div>
-</div>
+    <script>
+      const accounts = {
+        "yottalaboratories.co.uk": [
+          {
+            account: "Arco",
+            user: "garry@yottalaboratories.co.uk",
+            status: "Active",
+          },
+          {
+            account: "rs-online",
+            user: "garry@yottalaboratories.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "captiveanimals.co.uk": [
+          {
+            account: "Arco",
+            user: "garry@yottalaboratories.co.uk",
+            status: "Active",
+          },
+          {
+            account: "rs-online",
+            user: "garry@yottalaboratories.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "aura-wind.co.uk": [
+          { account: "Arco", user: "admin@aura-wind.co.uk", status: "Active" },
+          {
+            account: "Rs-online",
+            user: "dns@aura-wind.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "whitestonebridge.uk": [
+          {
+            account: "Arco",
+            user: "john@whitestonebridge.uk",
+            status: "Active",
+          },
+          {
+            account: "rs-online",
+            user: "john@whitestonebridge.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "john@whitestonebridge.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "john@whitestonebridge.uk", status: "Active" },
+          { account: "Pmc", user: "john@whitestonebridge.uk", status: "Active" },
+          { account: "Staples", user: "john@whitestonebridge.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "john@whitestonebridge.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "john@whitestonebridge.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "john@whitestonebridge.uk", status: "Active" },
+          { account: "Rexel", user: "john@whitestonebridge.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "john@whitestonebridge.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "john@whitestonebridge.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "john@whitestonebridge.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "john@whitestonebridge.uk", status: "Active" },
+        ],
+        "fatsoma.uk": [
+          { account: "Arco", user: "admin@fatsoma.uk", status: "Active" },
+          { account: "Rs-online", user: "dns@fatsoma.uk", status: "Active" },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "gearbulk.co.uk": [
+          { account: "Arco", user: "admin@gearbulk.co.uk", status: "Active" },
+          {
+            account: "Rs-online",
+            user: "dns@gearbulk.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "arrkltd.co.uk": [
+          { account: "Arco", user: "m.dyaga@arrkltd.co.uk", status: "Active" },
+          { account: "Rs-online", user: "dns@arrkltd.co.uk", status: "Active" },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "m.shah@arrkltd.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "ndsco.co.uk": [
+          { account: "Arco", user: "mirza.baig@ndsco.co.uk", status: "Active" },
+          { account: "Rs-online", user: "dns@ndsco.co.uk", status: "Active" },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "fintego.co.uk": [
+          { account: "Arco", user: "admin@fintego.co.uk", status: "Active" },
+          { account: "Rs-online", user: "dns@fintego.co.uk", status: "Active" },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "filterstechnik.co.uk": [
+          {
+            account: "Arco",
+            user: "admin@filterstechnik.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Rs-online",
+            user: "dns@filterstechnik.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "wbtec.co.uk": [
+          { account: "Arco", user: "admin@wbtec.co.uk", status: "Active" },
+          { account: "Rs-online", user: "dns@wbtec.co.uk", status: "Active" },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "fcrlimited.com": [
+          { account: "Arco", user: "admin@fcrlimited.com", status: "Active" },
+          {
+            account: "Rs-online",
+            user: "dns@fcrlimited.com",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "qflimited.co.uk": [
+          { account: "Arco", user: "admin@qflimited.co.uk", status: "Active" },
+          {
+            account: "Rs-online",
+            user: "dns@qflimited.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "jacelectrical.uk": [
+          { account: "Arco", user: "admin@jacelectrical.uk", status: "Active" },
+          {
+            account: "Rs-online",
+            user: "dns@jacelectrical.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "fwdiscovery.co.uk": [
+          {
+            account: "Arco",
+            user: "kiran.ali@fwdiscovery.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Rs-online",
+            user: "dns@fwdiscovery.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "movauk.co.uk": [
+          { account: "Arco", user: "admin@movauk.co.uk", status: "Active" },
+          { account: "Rs-online", user: "dns@movauk.co.uk", status: "Active" },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "blueberrypartners.co.uk": [
+          {
+            account: "Arco",
+            user: "admin@blueberrypartners.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Rs-online",
+            user: "dns@blueberrypartners.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "aarichmond.co.uk": [
+          { account: "Arco", user: "admin@aarichmond.co.uk", status: "Active" },
+          {
+            account: "Rs-online",
+            user: "dns@aarichmond.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "yottalaboratories.co.uk": [
+          { account: "Arco", user: "admin@yottalab.co.uk", status: "Active" },
+          {
+            account: "Rs-online",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "yottalaboratories.co.uk": [
+          { account: "Arco", user: "admin@yottalab.co.uk", status: "Active" },
+          {
+            account: "Rs-online",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+        "yottalaboratories.co.uk": [
+          { account: "Arco", user: "admin@yottalab.co.uk", status: "Active" },
+          {
+            account: "Rs-online",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "The Safety Supply Company",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Pmc", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Staples", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Office direct",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Richersounds",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active" },
+          { account: "Rexel", user: "dns@yottalab.co.uk", status: "Active" },
+          {
+            account: "Bpx Electro Mechanical",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "IKEA LIMITED",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          {
+            account: "Waterstones",
+            user: "dns@yottalab.co.uk",
+            status: "Active",
+          },
+          { account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active" },
+        ],
+      };
 
+      const modal = document.getElementById("accountModal");
+      const modalDomain = document.getElementById("modal-domain");
+      const modalAccounts = document.getElementById("modal-accounts");
+      const closeBtn = document.getElementsByClassName("close")[0];
 
-<script>
-const accounts = {
-"yottalaboratories.co.uk": [
-{account: "Arco", user: "garry@yottalaboratories.co.uk", status: "Active"},
-{account: "rs-online", user: "garry@yottalaboratories.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"captiveanimals.co.uk": [
-{account: "Arco", user: "garry@yottalaboratories.co.uk", status: "Active"},
-{account: "rs-online", user: "garry@yottalaboratories.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"aura-wind.co.uk": [
-{account: "Arco", user: "admin@aura-wind.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@aura-wind.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"fatsoma.uk": [
-{account: "Arco", user: "admin@fatsoma.uk", status: "Active"},
-{account: "Rs-online", user: "dns@fatsoma.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"gearbulk.co.uk": [
-{account: "Arco", user: "admin@gearbulk.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@gearbulk.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"arrkltd.co.uk": [
-{account: "Arco", user: "m.dyaga@arrkltd.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@arrkltd.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"ndsco.co.uk": [
-{account: "Arco", user: "admin@ndsco.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@ndsco.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"fintego.co.uk": [
-{account: "Arco", user: "admin@fintego.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@fintego.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"filterstechnik.co.uk": [
-{account: "Arco", user: "admin@filterstechnik.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@filterstechnik.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"wbtec.co.uk": [
-{account: "Arco", user: "admin@wbtec.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@wbtec.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"fcrlimited.com": [
-{account: "Arco", user: "admin@fcrlimited.com", status: "Active"},
-{account: "Rs-online", user: "dns@fcrlimited.com", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"qflimited.co.uk": [
-{account: "Arco", user: "admin@qflimited.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@qflimited.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"jacelectrical.uk": [
-{account: "Arco", user: "admin@jacelectrical.uk", status: "Active"},
-{account: "Rs-online", user: "dns@jacelectrical.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"fwdiscovery.co.uk": [
-{account: "Arco", user: "admin@fwdiscovery.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@fwdiscovery.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"movauk.co.uk": [
-{account: "Arco", user: "admin@movauk.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@movauk.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"blueberrypartners.co.uk": [
-{account: "Arco", user: "admin@blueberrypartners.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@blueberrypartners.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"aarichmond.co.uk": [
-{account: "Arco", user: "admin@aarichmond.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@aarichmond.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"yottalaboratories.co.uk": [
-{account: "Arco", user: "admin@yottalab.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"yottalaboratories.co.uk": [
-{account: "Arco", user: "admin@yottalab.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-"yottalaboratories.co.uk": [
-{account: "Arco", user: "admin@yottalab.co.uk", status: "Active"},
-{account: "Rs-online", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "The Safety Supply Company", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Mayflex", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Pmc", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Staples", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Office direct", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Richersounds", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Nesbits", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Rexel", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Bpx Electro Mechanical", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "IKEA LIMITED", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Waterstones", user: "dns@yottalab.co.uk", status: "Active"},
-{account: "Lyreco", user: "dns@yottalab.co.uk", status: "Active"}
-],
-};
+      document.querySelectorAll(".open-modal").forEach((link) => {
+        link.addEventListener("click", function () {
+          const domain = this.getAttribute("data-domain");
+          modalDomain.textContent = domain;
+          modalAccounts.innerHTML =
+            accounts[domain]
+              ?.map(
+                (a) =>
+                  `<tr><td>${a.account}</td><td>${a.user}</td><td>${a.status}</td></tr>`
+              )
+              .join("") || '<tr><td colspan="3">No accounts found</td></tr>';
+          modal.style.display = "block";
+        });
+      });
 
+      closeBtn.onclick = function () {
+        modal.style.display = "none";
+      };
+      window.onclick = function (e) {
+        if (e.target == modal) modal.style.display = "none";
+      };
+    </script>
+    <script>
+      document.querySelectorAll(".priority-dropdown").forEach((drop) => {
+        const btn = drop.querySelector(".priority-btn");
+        const menu = drop.querySelector(".priority-menu");
 
-const modal = document.getElementById('accountModal');
-const modalDomain = document.getElementById('modal-domain');
-const modalAccounts = document.getElementById('modal-accounts');
-const closeBtn = document.getElementsByClassName('close')[0];
+        // Toggle menu
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          menu.style.display =
+            menu.style.display === "block" ? "none" : "block";
+        });
 
-
-document.querySelectorAll('.open-modal').forEach(link => {
-link.addEventListener('click', function(){
-const domain = this.getAttribute('data-domain');
-modalDomain.textContent = domain;
-modalAccounts.innerHTML = accounts[domain]?.map(a => `<tr><td>${a.account}</td><td>${a.user}</td><td>${a.status}</td></tr>`).join('') || '<tr><td colspan="3">No accounts found</td></tr>';
-modal.style.display = 'block';
-});
-});
-
-
-closeBtn.onclick = function(){ modal.style.display = 'none'; }
-window.onclick = function(e){ if(e.target == modal) modal.style.display = 'none'; }
-</script>
-<script>
-document.querySelectorAll('.priority-dropdown').forEach(drop => {
-    const btn = drop.querySelector('.priority-btn');
-    const menu = drop.querySelector('.priority-menu');
-
-    // Toggle menu
-    btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        menu.style.display = menu.style.display === "block" ? "none" : "block";
-    });
-
-    // Handle option click
-    menu.querySelectorAll('.priority-option').forEach(option => {
-        option.addEventListener('click', function () {
+        // Handle option click
+        menu.querySelectorAll(".priority-option").forEach((option) => {
+          option.addEventListener("click", function () {
             const val = this.getAttribute("data-value");
 
             // Update button text + color
@@ -869,15 +1798,19 @@ document.querySelectorAll('.priority-dropdown').forEach(drop => {
 
             // Close menu
             menu.style.display = "none";
+          });
         });
-    });
-});
+      });
 
-// Close menus when clicking outside
-document.addEventListener('click', function () {
-    document.querySelectorAll('.priority-menu').forEach(m => m.style.display = "none");
-});
-</script>
+      // Close menus when clicking outside
+      document.addEventListener("click", function () {
+        document
+          .querySelectorAll(".priority-menu")
+          .forEach((m) => (m.style.display = "none"));
+      });
+      const today = new Date().toISOString().split("T")[0];
+        document.getElementById("invoiceDate").value = today;
 
-</body>
+    </script>
+  </body>
 </html>
